@@ -68,7 +68,7 @@ gulp.task('serve', function(done) {
           }
         }
       },
-      open: true
+      open: false
     }));
 });
 

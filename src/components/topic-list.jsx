@@ -1,22 +1,31 @@
 var React = require('react');
+var Reflux = require('reflux');
 var TopicStore = require('../stores/topic-store');
+var Actions = require('../actions');
 
 module.exports = React.createClass({
+	mixins: [
+		// Reflux.listenTo(script, functionToRun)
+		Reflux.listenTo(TopicStore, 'onChange')
+	],
 	getInitialState: function(){
 		return {
 			topics: []
 		}
 	},
 	componentWillMount: function(){
-		TopicStore.getTopics()
-			.then(function(){
-				// successfully fetched topics
-				// topics available on TopicStore.topics
-				this.setState({
-					topics: TopicStore.topics
-				});
+		// TopicStore.getTopics()
+		// 	.then(function(){
+		// 		// successfully fetched topics
+		// 		// topics available on TopicStore.topics
+		// 		this.setState({
+		// 			topics: TopicStore.topics
+		// 		});
 
-			}.bind(this) );
+		// 	}.bind(this) );
+		
+		// call an ACTION, then Action will call getTopics
+		Actions.getTopics();
 	},
 	render: function(){
 		return(
@@ -34,5 +43,8 @@ module.exports = React.createClass({
 				</li>
 			);
 		});
+	},
+	onChange: function(event, topics){
+		this.setState({topics: topics});
 	}
 });
