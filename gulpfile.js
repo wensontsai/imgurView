@@ -9,6 +9,7 @@ var server = require('gulp-server-livereload');
 var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var watch = require('gulp-watch');
+var util = require('gulp-util');
 
 var notify = function(error) {
   var message = 'In: ';
@@ -30,6 +31,7 @@ var notify = function(error) {
   }
 
   notifier.notify({title: title, message: message});
+  util.log(util.colors.red('Error'), error.message);
 };
 
 var bundler = watchify(browserify({
