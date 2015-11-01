@@ -2,10 +2,12 @@ var React = require('react');
 var Reflux = require('reflux');
 var TopicStore = require('../stores/topic-store');
 var Actions = require('../actions');
+var Router = require('react-router');
+var Link = Router.Link;
 
 module.exports = React.createClass({
 	mixins: [
-		// Reflux.listenTo(script, functionToRun)
+		// Reflux listens for 'change' : 	Reflux.listenTo(script, functionToRun)
 		Reflux.listenTo(TopicStore, 'onChange')
 	],
 	getInitialState: function(){
@@ -21,7 +23,6 @@ module.exports = React.createClass({
 		// 		this.setState({
 		// 			topics: TopicStore.topics
 		// 		});
-
 		// 	}.bind(this) );
 		
 		// call an ACTION, then Action will call getTopics
@@ -38,9 +39,10 @@ module.exports = React.createClass({
 	renderTopics: function(){
 		return this.state.topics.map(function(topic){
 			return (
-				<li>
-					{topic}
-				</li>
+				<Link to={'topics/' + topic.id} className="list-group-item" key={topic.id}>
+					<h4>{topic.name}</h4>
+					<p>{topic.description}</p>
+				</Link>
 			);
 		});
 	},
