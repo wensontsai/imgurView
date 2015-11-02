@@ -4,8 +4,10 @@ var Reflux = require('reflux');
 var Actions = require('../actions');
 var ImageStore = require('../stores/image-store');
 
+
+var ImagePreview = require('./image-preview');
+
 module.exports = React.createClass({
-	listenables: [Actions],
 	mixins: [
 		Reflux.listenTo(ImageStore, 'onChange')
 	],
@@ -19,10 +21,18 @@ module.exports = React.createClass({
 	},
 	render: function(){
 		return(
-			<div>
-				I am a topic with ID: {this.props.params.id}
+			<div className="topic">
+				{this.renderImages()}
 			</div>
 		);	
+	},
+	renderImages: function(){
+		return this.state.images.map(function(image){
+			return <ImagePreview key={image.id} {...image} />
+		});
+	},
+	componentWillReceiveProps: function(nextProps){
+		Actions.getImages(nextProps.params.id);
 	},
 	onChange: function(event, images){
 		this.setState( {images: images} )

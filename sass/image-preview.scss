@@ -1,0 +1,17 @@
+.image-preview{
+	display: inline-block;
+}
+
+.image-preview img{
+	height: 500px;
+	width: 500px;
+	display: inline-block;
+}
+
+
+.image-preview video {
+	height: 500px;
+	width: 500px;
+	vertical-align: middle;
+	background-color: black;
+}
